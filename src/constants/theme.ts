@@ -1,0 +1,36 @@
+export const palette = {
+  ink: "#0d171b",
+  inkRaised: "#15252a",
+  inkSoft: "#1d3034",
+  cream: "#efe7d8",
+  creamMuted: "#d3cab9",
+  fog: "#a5b2ae",
+  fogDim: "#899892",
+  placeholder: "#899892",
+  moss: "#91aa9d",
+  mossDark: "#57776b",
+  mossWash: "rgba(145,170,157,0.16)",
+  mossWashStrong: "rgba(145,170,157,0.24)",
+  rain: "#7897ad",
+  ember: "#c5a477",
+  danger: "#cd8b8b",
+  dangerWash: "rgba(205,139,139,0.14)",
+  dangerLine: "rgba(205,139,139,0.30)",
+  line: "rgba(239,231,216,0.11)",
+  overlay: "rgba(5,11,15,0.58)",
+  tabBar: "#111f23",
+  cardGlass: "rgba(21,37,42,0.94)",
+  creamWash: "rgba(239,231,216,0.07)",
+  creamWashSoft: "rgba(239,231,216,0.04)",
+  controlGlass: "rgba(13,23,27,0.64)",
+} as const;
+
+export const radii = { sm: 14, md: 20, lg: 28, pill: 999 } as const;
+export const spacing = {
+  xs: 6,
+  sm: 10,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+} as const;

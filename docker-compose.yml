@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: innerroom
+      POSTGRES_USER: innerroom
+      POSTGRES_PASSWORD: innerroom
+    ports:
+      - "5432:5432"
+    volumes:
+      - innerroom_pg:/var/lib/postgresql/data
+  api:
+    build: ./server
+    env_file: ./server/.env
+    ports:
+      - "4040:4040"
+    depends_on:
+      - postgres
+volumes:
+  innerroom_pg:
