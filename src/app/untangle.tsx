@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
-import { useState } from "react";
-import { TextInput, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { ScrollView, TextInput, View } from "react-native";
 
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -9,6 +9,7 @@ import { Screen } from "@/components/ui/Screen";
 import { Type } from "@/components/ui/Type";
 import { palette } from "@/constants/theme";
 import { saveThoughtRecord } from "@/database";
+import { useKeyboardHeight } from "@/hooks/useKeyboardHeight";
 
 const fields = [
   {
@@ -35,6 +36,11 @@ const fields = [
 
 export default function UntangleScreen() {
   const router = useRouter();
+  const scrollRef = useRef<ScrollView>(null);
+  const fieldsTop = useRef(0);
+  const fieldOffsets = useRef<Record<string, number>>({});
+  const keyboardHeight = useKeyboardHeight();
+  const [focusedField, setFocusedField] = useState<string | null>(null);
   const [values, setValues] = useState({
     thought: "",
     facts: "",
@@ -42,44 +48,80 @@ export default function UntangleScreen() {
     action: "",
   });
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (!focusedField || keyboardHeight <= 0) return;
+
+    const timer = setTimeout(() => {
+      const fieldOffset = fieldOffsets.current[focusedField];
+      if (fieldOffset === undefined) return;
+
+      scrollRef.current?.scrollTo({
+        animated: true,
+        y: Math.max(0, fieldsTop.current + fieldOffset - 20),
+      });
+    }, 80);
+
+    return () => clearTimeout(timer);
+  }, [focusedField, keyboardHeight]);
+
   const save = async () => {
     await saveThoughtRecord(values);
     setSaved(true);
     setTimeout(() => router.back(), 500);
   };
   return (
-    <Screen>
+    <Screen
+      ref={scrollRef}
+      keyboardDismissMode="on-drag"
+      contentContainerStyle={{
+        paddingBottom: keyboardHeight > 0 ? keyboardHeight + 140 : 120,
+      }}
+    >
       <PageHeader
         back
         title="Gỡ một suy nghĩ"
         subtitle="Không phủ nhận cảm xúc. Chỉ đặt sự thật và nỗi sợ ở những chỗ khác nhau."
       />
-      <View className="gap-4">
+      <View
+        className="gap-4"
+        onLayout={(event) => {
+          fieldsTop.current = event.nativeEvent.layout.y;
+        }}
+      >
         {fields.map((field, index) => (
-          <Card key={field.key}>
-            <View className="mb-3 flex-row items-center">
-              <View
-                className="mr-3 h-7 w-7 items-center justify-center rounded-full"
-                style={{ backgroundColor: palette.inkSoft }}
-              >
-                <Type variant="small" style={{ color: palette.moss }}>
-                  {index + 1}
-                </Type>
+          <View
+            key={field.key}
+            onLayout={(event) => {
+              fieldOffsets.current[field.key] = event.nativeEvent.layout.y;
+            }}
+          >
+            <Card>
+              <View className="mb-3 flex-row items-center">
+                <View
+                  className="mr-3 h-7 w-7 items-center justify-center rounded-full"
+                  style={{ backgroundColor: palette.inkSoft }}
+                >
+                  <Type variant="small" style={{ color: palette.moss }}>
+                    {index + 1}
+                  </Type>
+                </View>
+                <Type variant="heading">{field.title}</Type>
               </View>
-              <Type variant="heading">{field.title}</Type>
-            </View>
-            <TextInput
-              multiline
-              value={values[field.key]}
-              onChangeText={(text) =>
-                setValues((current) => ({ ...current, [field.key]: text }))
-              }
-              placeholder={field.prompt}
-              placeholderTextColor={palette.placeholder}
-              textAlignVertical="top"
-              className="min-h-[92px] rounded-[16px] bg-ink-soft px-4 py-3 font-sans text-[15px] leading-6 text-cream"
-            />
-          </Card>
+              <TextInput
+                multiline
+                value={values[field.key]}
+                onFocus={() => setFocusedField(field.key)}
+                onChangeText={(text) =>
+                  setValues((current) => ({ ...current, [field.key]: text }))
+                }
+                placeholder={field.prompt}
+                placeholderTextColor={palette.placeholder}
+                textAlignVertical="top"
+                className="min-h-[92px] rounded-[16px] bg-ink-soft px-4 py-3 font-sans text-[15px] leading-6 text-cream"
+              />
+            </Card>
+          </View>
         ))}
       </View>
       <Button
