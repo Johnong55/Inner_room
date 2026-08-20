@@ -59,7 +59,7 @@ jobs:
           cp android/app/build/outputs/apk/release/app-release.apk "artifact/InnerRoom-${GITHUB_SHA:0:7}-arm64.apk"
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: innerroom-android-${{ github.sha }}
           path: artifact/*.apk
