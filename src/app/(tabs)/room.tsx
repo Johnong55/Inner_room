@@ -16,21 +16,23 @@ export default function RoomScreen() {
   return (
     <Screen>
       <PageHeader
-        title="Một cuộc trò chuyện với chính mình"
-        subtitle="Không phải một người lạ cho lời khuyên. Chỉ là một tấm gương giúp bạn nghe rõ hơn."
+        title="Trò chuyện"
+        subtitle="Chọn cách bạn muốn được lắng nghe lúc này."
       />
       <View
-        className="mb-6 rounded-[18px] border px-4 py-3"
+        className="mb-6 flex-row items-center justify-between border-b pb-4"
         style={{
           borderColor: palette.line,
-          backgroundColor: palette.inkRaised,
         }}
       >
-        <Type variant="eyebrow" style={{ color: palette.moss }}>
-          KÝ ỨC · {memoryEnabled ? "ĐANG BẬT" : "ĐANG TẮT"}
-        </Type>
-        <Type variant="small" muted className="mt-1.5">
-          Chỉ thay đổi khi chính bạn chọn trong mục Của bạn.
+        <View className="flex-1 pr-4">
+          <Type variant="small">Ký ức từ nhật ký</Type>
+          <Type variant="small" muted>
+            Có thể thay đổi trong mục Của bạn
+          </Type>
+        </View>
+        <Type variant="small" muted>
+          {memoryEnabled ? "Đang bật" : "Đang tắt"}
         </Type>
       </View>
       <View className="gap-3">
@@ -43,14 +45,12 @@ export default function RoomScreen() {
       </Type>
       <View className="gap-3">
         <EditorialLink
-          accent={palette.rain}
           description="Tách sự thật khỏi điều mình đang suy đoán."
           kicker="VIẾT ĐỂ NHÌN RÕ"
           onPress={() => router.push("/untangle")}
           title="Gỡ một suy nghĩ"
         />
         <EditorialLink
-          accent={palette.ember}
           description="Chỉ nhẹ đi 1%, không cần giải quyết tất cả."
           kicker="MỘT BƯỚC NHỎ"
           onPress={() =>

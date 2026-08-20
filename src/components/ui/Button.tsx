@@ -20,7 +20,7 @@ export function Button({
 }: Props) {
   const background =
     tone === "primary"
-      ? palette.moss
+      ? palette.cream
       : tone === "danger"
         ? palette.dangerWash
         : palette.inkSoft;
@@ -33,8 +33,12 @@ export function Button({
   return (
     <PressableScale disabled={disabled || loading} {...props}>
       <View
-        className="min-h-[54px] items-center justify-center rounded-full px-6"
-        style={{ backgroundColor: background, opacity: disabled ? 0.45 : 1 }}
+        className="min-h-[54px] items-center justify-center rounded-[16px] border px-6"
+        style={{
+          backgroundColor: background,
+          borderColor: tone === "primary" ? palette.cream : palette.line,
+          opacity: disabled ? 0.4 : 1,
+        }}
       >
         {loading ? (
           <ActivityIndicator color={color} />

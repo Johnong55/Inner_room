@@ -2,9 +2,7 @@ export type MoodId = 'peaceful' | 'okay' | 'empty' | 'sad' | 'tired' | 'angry' |
 
 export type Mood = {
   id: MoodId;
-  emoji: string;
   label: string;
-  weather: string;
 };
 
 export type JournalEntry = {
@@ -19,7 +17,6 @@ export type JournalEntry = {
 export type ConversationModeId = 'mirror' | 'tomorrow' | 'untangle' | 'listen';
 export type ConversationMode = {
   id: ConversationModeId;
-  emoji: string;
   title: string;
   description: string;
 };
