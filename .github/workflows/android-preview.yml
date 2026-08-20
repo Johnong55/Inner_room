@@ -35,7 +35,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-          cache: gradle
 
       - name: Configure Android SDK
         uses: android-actions/setup-android@v4
@@ -48,6 +47,11 @@ jobs:
 
       - name: Generate Android project
         run: npx expo prebuild --platform android --clean --no-install
+
+      - name: Configure Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
 
       - name: Build arm64 release APK
         working-directory: android
