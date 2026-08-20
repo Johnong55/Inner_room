@@ -9,12 +9,12 @@ type Props = ComponentProps<typeof Text> & {
 };
 
 const variants = {
-  display: 'font-display text-[38px] leading-[42px]',
-  title: 'font-display text-[32px] leading-[36px]',
+  display: 'font-display text-[36px] leading-[40px]',
+  title: 'font-semibold text-[27px] leading-[34px]',
   heading: 'font-semibold text-[18px] leading-7',
-  body: 'font-sans text-[15px] leading-6',
+  body: 'font-sans text-[16px] leading-7',
   small: 'font-sans text-[13px] leading-5',
-  eyebrow: 'font-semibold text-[11px] uppercase tracking-[2px]',
+  eyebrow: 'font-semibold text-[10px] uppercase tracking-[1.6px]',
 };
 
 export function Type({ variant = 'body', muted, className = '', style, ...props }: Props) {

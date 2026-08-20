@@ -1,48 +1,31 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { View } from "react-native";
-import Animated, { FadeInDown } from "react-native-reanimated";
 
 import {
   MoodMoment,
   type MoodNextActivity,
 } from "@/components/mood/MoodMoment";
 import { MoodPicker } from "@/components/mood/MoodPicker";
+import { Button } from "@/components/ui/Button";
 import { EditorialLink } from "@/components/ui/EditorialLink";
 import { Screen } from "@/components/ui/Screen";
 import { Type } from "@/components/ui/Type";
-import { palette } from "@/constants/theme";
 import { saveMoodCheckIn } from "@/database";
 import type { MoodId } from "@/types";
 
 const actions = [
   {
-    kicker: "NHẬT KÝ",
-    title: "Viết về hôm nay",
-    note: "Đặt những điều đang nặng xuống đây",
-    href: "/journal/editor" as const,
-    color: palette.ember,
-  },
-  {
-    kicker: "PHẢN CHIẾU",
-    title: "Nói chuyện với chính mình",
-    note: "Một tấm gương cho những điều khó gọi tên",
+    kicker: "TRÒ CHUYỆN",
+    title: "Nói với chính mình",
+    note: "Để hiểu rõ hơn điều đang ở trong đầu",
     href: "/(tabs)/room" as const,
-    color: palette.moss,
   },
   {
-    kicker: "KHOẢNG LẶNG",
+    kicker: "YÊN TĨNH",
     title: "Ngồi yên một chút",
-    note: "Chỉ mưa, gió và một nhịp thở chậm",
+    note: "Không cần viết, không cần tìm câu trả lời",
     href: "/quiet" as const,
-    color: palette.rain,
-  },
-  {
-    kicker: "HÀNH TRÌNH",
-    title: "Những ngày đã qua",
-    note: "Nhìn lại mà không chấm điểm",
-    href: "/(tabs)/journey" as const,
-    color: palette.creamMuted,
   },
 ];
 
@@ -70,33 +53,34 @@ export default function TodayScreen() {
 
   return (
     <Screen>
-      <View className="pb-8 pt-10">
+      <View className="pb-7 pt-8">
         <Type variant="display">{greeting()}</Type>
         <Type muted className="mt-2">
           Hôm nay trong lòng bạn thế nào?
         </Type>
       </View>
       <MoodPicker value={mood} onChange={chooseMood} />
-      <View className="mt-9 gap-3">
-        {actions.map((action, index) => {
-          return (
-            <Animated.View
+      <View className="mt-8">
+        <Type variant="eyebrow" muted className="mb-3">
+          BẮT ĐẦU TỪ MỘT VIỆC
+        </Type>
+        <Button
+          label="Viết về hôm nay"
+          onPress={() => router.push("/journal/editor")}
+        />
+        <View className="mt-3 gap-2">
+          {actions.map((action) => (
+            <EditorialLink
               key={action.title}
-              entering={FadeInDown.delay(90 * index).duration(650)}
-            >
-              <EditorialLink
-                accent={action.color}
-                description={action.note}
-                index={String(index + 1).padStart(2, "0")}
-                kicker={action.kicker}
-                onPress={() => router.push(action.href)}
-                title={action.title}
-              />
-            </Animated.View>
-          );
-        })}
+              description={action.note}
+              kicker={action.kicker}
+              onPress={() => router.push(action.href)}
+              title={action.title}
+            />
+          ))}
+        </View>
       </View>
-      <Type muted className="px-8 pt-11 text-center italic">
+      <Type muted className="px-8 pt-9 text-center italic">
         “Không phải ngày nào cũng cần có câu trả lời.”
       </Type>
       <MoodMoment

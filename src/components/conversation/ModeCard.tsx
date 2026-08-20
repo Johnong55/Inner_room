@@ -1,7 +1,6 @@
 import { useRouter } from "expo-router";
 
 import { EditorialLink } from "@/components/ui/EditorialLink";
-import { palette } from "@/constants/theme";
 import type { ConversationMode } from "@/types";
 
 export function ModeCard({
@@ -14,7 +13,6 @@ export function ModeCard({
   const router = useRouter();
   return (
     <EditorialLink
-      accent={palette.moss}
       description={mode.description}
       index={String(index + 1).padStart(2, "0")}
       kicker="CÁCH TRÒ CHUYỆN"
