@@ -1,14 +1,14 @@
 import type { ConversationMode, Mood, ResponseIntent } from '@/types';
 
 export const moods: Mood[] = [
-  { id: 'peaceful', emoji: '😌', label: 'Bình yên', weather: '☀' },
-  { id: 'okay', emoji: '🙂', label: 'Ổn', weather: '🌤' },
-  { id: 'empty', emoji: '😶', label: 'Trống rỗng', weather: '☁' },
-  { id: 'sad', emoji: '😔', label: 'Buồn', weather: '🌧' },
-  { id: 'tired', emoji: '😣', label: 'Mệt', weather: '☁' },
-  { id: 'angry', emoji: '😤', label: 'Bực bội', weather: '⛈' },
-  { id: 'anxious', emoji: '😰', label: 'Lo lắng', weather: '🌫' },
-  { id: 'unsure', emoji: '🌧', label: 'Không biết nữa', weather: '🌧' },
+  { id: 'peaceful', label: 'Bình yên' },
+  { id: 'okay', label: 'Ổn' },
+  { id: 'empty', label: 'Trống rỗng' },
+  { id: 'sad', label: 'Buồn' },
+  { id: 'tired', label: 'Mệt' },
+  { id: 'angry', label: 'Bực bội' },
+  { id: 'anxious', label: 'Lo lắng' },
+  { id: 'unsure', label: 'Không biết nữa' },
 ];
 
 export const journalPrompts = [
@@ -22,10 +22,10 @@ export const journalPrompts = [
 ];
 
 export const conversationModes: ConversationMode[] = [
-  { id: 'mirror', emoji: '🪞', title: 'Gương', description: 'Chỉ giúp tôi hiểu điều tôi đang nghĩ.' },
-  { id: 'tomorrow', emoji: '🌱', title: 'Tôi của ngày mai', description: 'Một góc nhìn bình tĩnh hơn, không giả vờ biết tương lai.' },
-  { id: 'untangle', emoji: '🧭', title: 'Gỡ rối', description: 'Sắp xếp những điều đang chen nhau trong đầu.' },
-  { id: 'listen', emoji: '🌧', title: 'Chỉ muốn nói thôi', description: 'Không giải quyết. Không khuyên, trừ khi bạn hỏi.' },
+  { id: 'mirror', title: 'Gương', description: 'Chỉ giúp tôi hiểu điều tôi đang nghĩ.' },
+  { id: 'tomorrow', title: 'Tôi của ngày mai', description: 'Một góc nhìn bình tĩnh hơn, không giả vờ biết tương lai.' },
+  { id: 'untangle', title: 'Gỡ rối', description: 'Sắp xếp những điều đang chen nhau trong đầu.' },
+  { id: 'listen', title: 'Chỉ muốn nói thôi', description: 'Không giải quyết. Không khuyên, trừ khi bạn hỏi.' },
 ];
 
 export const responseIntents: ResponseIntent[] = [

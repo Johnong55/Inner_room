@@ -47,20 +47,20 @@ function MoodChoice({
     backgroundColor: interpolateColor(
       selected.value,
       [0, 1],
-      [palette.inkRaised, palette.mossWash],
+      [palette.inkRaised, palette.creamWash],
     ),
     borderColor: interpolateColor(
       selected.value,
       [0, 1],
-      [palette.line, palette.moss],
+      [palette.line, palette.lineStrong],
     ),
-    transform: [{ scale: interpolate(selected.value, [0, 1], [1, 1.005]) }],
+    transform: [{ scale: interpolate(selected.value, [0, 1], [1, 1.015]) }],
   }));
 
   const glyphStyle = useAnimatedStyle(() => ({
     transform: [
       { translateY: interpolate(selected.value, [0, 1], [0, -1]) },
-      { scale: interpolate(selected.value, [0, 1], [1, 1.05]) },
+      { scale: interpolate(selected.value, [0, 1], [1, 1.04]) },
     ],
   }));
 
@@ -69,20 +69,28 @@ function MoodChoice({
       accessibilityLabel={label}
       accessibilityState={{ selected: active }}
       onPress={onPress}
-      className="w-[48%]"
+      className="w-[23.5%]"
     >
       <Animated.View
-        className="min-h-[66px] flex-row items-center rounded-[20px] border px-4"
+        className="min-h-[78px] items-center justify-center rounded-[16px] border px-1 py-2"
         style={cardStyle}
       >
-        <Animated.View className="mr-3" style={glyphStyle}>
-          <MoodGlyph active={active} moodId={moodId} />
+        <Animated.View style={glyphStyle}>
+          <MoodGlyph active={active} moodId={moodId} size={30} />
         </Animated.View>
         <Type
           variant="small"
-          style={{ color: active ? palette.cream : palette.creamMuted }}
+          numberOfLines={2}
+          style={{
+            color: active ? palette.cream : palette.fog,
+            fontSize: 11,
+            lineHeight: 14,
+            marginTop: 3,
+            textAlign: "center",
+            width: "100%",
+          }}
         >
-          {label}
+          {moodId === "unsure" ? "Chưa rõ" : label}
         </Type>
       </Animated.View>
     </PressableScale>
@@ -97,7 +105,7 @@ export function MoodPicker({
   onChange: (mood: MoodId) => void;
 }) {
   return (
-    <View className="flex-row flex-wrap justify-between gap-y-3">
+    <View className="flex-row flex-wrap justify-between gap-y-2.5">
       {moods.map((mood) => {
         const active = value === mood.id;
         return (

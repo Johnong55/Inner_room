@@ -37,7 +37,7 @@ export function InnerRoomTabBar({
   const [dockWidth, setDockWidth] = useState(0);
   const activeIndex = useSharedValue(state.index);
   const reduceMotion = useReducedMotion();
-  const itemWidth = dockWidth > 0 ? (dockWidth - 12) / state.routes.length : 0;
+  const itemWidth = dockWidth > 0 ? dockWidth / state.routes.length : 0;
 
   useEffect(() => {
     activeIndex.value = reduceMotion
@@ -60,13 +60,16 @@ export function InnerRoomTabBar({
   if (keyboardHeight > 0) return null;
 
   return (
-    <View
-      pointerEvents="box-none"
-      style={[styles.positioner, { bottom: Math.max(insets.bottom, 10) }]}
-    >
+    <View pointerEvents="box-none" style={styles.positioner}>
       <View
         onLayout={(event) => setDockWidth(event.nativeEvent.layout.width)}
-        style={styles.dock}
+        style={[
+          styles.dock,
+          {
+            height: 58 + Math.max(insets.bottom, 8),
+            paddingBottom: Math.max(insets.bottom, 8),
+          },
+        ]}
       >
         <Animated.View style={[styles.indicator, indicatorStyle]} />
         {state.routes.map((route, index) => {
@@ -82,8 +85,8 @@ export function InnerRoomTabBar({
               type: "tabPress",
             });
             if (!focused && !event.defaultPrevented) {
-              void Haptics.selectionAsync();
               navigation.navigate(route.name, route.params);
+              void Haptics.selectionAsync();
             }
           };
 
@@ -121,44 +124,34 @@ const styles = StyleSheet.create({
   activeLabel: {
     color: palette.cream,
     fontFamily: "Manrope_600SemiBold",
-    fontSize: 11.5,
-    lineHeight: 16,
+    fontSize: 12.5,
+    lineHeight: 18,
   },
   dock: {
     alignItems: "center",
-    backgroundColor: palette.cardGlass,
+    backgroundColor: palette.tabBar,
     borderColor: palette.line,
-    borderRadius: 24,
-    borderWidth: 1,
-    elevation: 8,
+    borderTopWidth: 1,
     flexDirection: "row",
-    height: 60,
-    paddingHorizontal: 6,
-    shadowColor: "#03090c",
-    shadowOffset: { height: 5, width: 0 },
-    shadowOpacity: 0.24,
-    shadowRadius: 12,
   },
   indicator: {
-    backgroundColor: palette.mossWash,
-    borderColor: `${palette.moss}38`,
-    borderRadius: 19,
-    borderWidth: 1,
-    bottom: 6,
-    left: 6,
+    backgroundColor: palette.creamMuted,
+    height: 2,
+    left: 0,
     position: "absolute",
-    top: 6,
+    top: -1,
   },
   positioner: {
-    left: 14,
+    bottom: 0,
+    left: 0,
     position: "absolute",
-    right: 14,
+    right: 0,
   },
   restingLabel: {
     color: palette.fogDim,
     fontFamily: "Manrope_500Medium",
-    fontSize: 11.5,
-    lineHeight: 16,
+    fontSize: 12.5,
+    lineHeight: 18,
   },
   touchTarget: {
     alignItems: "center",
