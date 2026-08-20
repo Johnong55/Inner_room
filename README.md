@@ -58,6 +58,12 @@ npm --prefix server test
 npm --prefix server audit --omit=dev
 ```
 
+## Branch workflow and CI/CD
+
+Development happens on `feature/*`, `fix/*`, `chore/*`, or `release/*` branches. Changes reach `main` through a Pull Request after CI passes; see [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+GitHub Actions runs mobile TypeScript, lint, Android bundle verification, API compilation, and API tests for every working branch and Pull Request. Pushing a `release/*` branch, or manually starting **Android Preview APK**, builds an installable arm64 APK and retains it as a workflow artifact for 14 days. Preview artifacts are for internal testing and are not Google Play releases.
+
 ## Privacy model
 
 Local-only and anonymous modes are on by default. Journal memory, AI history, cloud sync, notifications, biometrics, and PIN are opt-in. The OpenAI key stays on the server. Reflection requests use `store: false`; only the most recent conversation turns and, when explicitly allowed, up to five bounded journal excerpts are sent. Semantic search sends bounded excerpts only after the same memory permission is enabled.
